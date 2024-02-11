@@ -25,7 +25,7 @@ def create_user():
     form_create_user = FormCreateUser()
 
     if form_create_user.validate_on_submit():
-        pwd = bcrypt.generate_password_hash(form_create_user.pwd.data)
+        pwd = bcrypt.generate_password_hash(form_create_user.pwd.data).decode("utf-8")
         user = User(username=form_create_user.username.data,
                     pwd=pwd,
                     email=form_create_user.email.data)

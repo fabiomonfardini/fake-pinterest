@@ -22,14 +22,14 @@ class User(database.Model, UserMixin):
         self.pwd = pwd
 
     def canLogin(self, pwd_to_validate=""):
-        valid_pwd = bcrypt.check_password_hash(self.pwd, pwd_to_validate)
+        valid_pwd = bcrypt.check_password_hash(self.pwd.encode("utf-8"), pwd_to_validate)
         return valid_pwd
 
 class Picture(database.Model):
     id = database.Column(database.Integer, primary_key=True)
     image = database.Column(database.String, default="default.png")
     cre_date = database.Column(database.DateTime, nullable=False, default=datetime.now)
-    user_id = database.Column(database.String, database.ForeignKey("user.id"), nullable=False)
+    user_id = database.Column(database.Integer, database.ForeignKey("user.id"), nullable=False)
 
     def __init__(self, image, user_id) -> None:
         super().__init__()
